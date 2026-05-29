@@ -6,45 +6,43 @@ An IoT-based wearable safety solution that integrates hardware-level motion sens
 
 ## 🚀 Overview
 
-The **Veera Safety System** is designed to act as a silent guardian in critical situations where accessing a smartphone manually is impossible. By bridging the gap between embedded hardware and mobile computing, the system automatically detects distress signs (like physical assault or sudden falls) and instantly coordinates multi-layered emergency protocols.
+The **Veera Safety System** is designed to act as a silent guardian in critical situations where accessing a smartphone manually is impossible. By seamlessly bridging the gap between embedded hardware and mobile computing, the system automatically detects distress signs (such as physical assault or sudden falls) and instantly coordinates multi-layered emergency protocols without requiring manual user interaction on the phone.
 
 ---
 
 ## 📂 Code & Repository Structure
 
-Hamare project ka source code alag-alag layers mein standard structure ke anusar divide kiya gaya hai, jise aap is repository mein dekh sakte hain:
+The source code of this project is divided into standard architectural layers to ensure clean code management:
 
-1. **`MainActivity.java` (Core Logic):** Isme TCP Socket connectivity, Sensor Event Listener, SmsManager, aur background MediaRecorder ka main backend Java logic implement kiya gaya hai.
-2. **`activity_main.xml` (UI Design):** App ka responsive front-end design, jisme dynamic Connect button aur emergency red SOS trigger box design kiya gaya hai.
-3. **`AndroidManifest.xml` (Permissions):** Hardware network accessibility ke liye aur safety parameters (`SEND_SMS`, `ACCESS_FINE_LOCATION`, `RECORD_AUDIO`) ki critical configurations handle ki gayi hain.
+1. **`MainActivity.java` (Core Logic):** Contains the core backend Java logic implementing TCP Socket connectivity, Sensor Event Listeners, background emergency `SmsManager` tasks, and background `MediaRecorder` logic.
+2. **`activity_main.xml` (UI Design):** Features a responsive front-end layout designed with XML components, including a dynamic connection status button and a prominent emergency SOS trigger dashboard.
+3. **`AndroidManifest.xml` (Permissions & Config):** Manages the hardware network access and declares critical privacy permissions such as `SEND_SMS`, `ACCESS_FINE_LOCATION`, and `RECORD_AUDIO`.
 
 ---
 
 ## 🛠️ System Architecture & Features
 
 ### 1. Hardware Unit (Edge Processing)
-* **Microcontroller:** `ESP32` (Dual-Core architecture utilized for non-blocking multitasking).
-* **Sensors:** `MPU6050` (6-axis Inertial Measurement Unit containing a 3-axis Accelerometer and 3-axis Gyroscope).
-* **Network Mode:** Configured in `Soft-AP (Access Point)` mode, enabling the device to create its own local Wi-Fi hotspot.
+* **Microcontroller:** `ESP32` (Leverages a dual-core architecture to execute non-blocking multitasking tasks).
+* **Sensors:** `MPU6050` (A 6-axis Inertial Measurement Unit containing a integrated 3-axis Accelerometer and 3-axis Gyroscope).
+* **Network Mode:** Configured in `Soft-AP (Access Point)` mode, enabling the device to host its own local Wi-Fi network for standalone reliability.
 
 ### 2. Android Application (Mobile Engine)
-* **Stack:** Developed natively in `Java` using Android Studio.
-* **Networking:** Establishes a highly reliable, persistent `TCP Socket Connection` (`IP: 192.168.4.1`, `Port: 80`) to stream real-time event flags from the hardware.
+* **Stack:** Developed natively utilizing the `Java` programming language within Android Studio.
+* **Networking:** Establishes a persistent, lightweight `TCP Socket Connection` (`IP: 192.168.4.1`, `Port: 80`) to stream real-time sensor flags directly from the hardware.
 
 ### 3. Emergency Execution Protocol
-Upon receiving a hardware trigger (`SOS_BUTTON` or `SOS_FALL`):
-1. **Live Tracking:** Fetches highly precise GPS coordinates using the Android `Fine Location API`.
-2. **Automated Alerts:** Constructs a dynamic Google Maps URL and dispatches it via `SmsManager` to the saved guardian contact.
-3. **Evidence Logging:** Triggers the phone's `MediaRecorder` in the background to capture ambient audio coordinates for future legal evidence.
+As soon as a hardware trigger (`SOS_BUTTON` or `SOS_FALL`) is processed:
+1. **Live Tracking:** Fetches precise location coordinates via the Android `Fine Location API`.
+2. **Automated Alerts:** Builds a dynamic Google Maps URL hyperlink and dispatches it via background SMS to the saved emergency contact.
+3. **Evidence Logging:** Triggers the device's `MediaRecorder` silently in the background to log ambient audio for future legal verification.
 
 ---
 
 ## 🔄 Project Workflow & Output Gallery
 
-Niche diye gaye sequence ke anusar aap hamare project ka complete step-by-step working aur live hardware testing screenshots dekh sakte hain:
-
 #### 1️⃣ Step 1: Hardware Circuit Setup
-Device ko power dene ke baad ESP32 aur MPU6050 Active ho jaate hain aur local hotspot transmission shuru karte hain.
+**Description:** The hardware prototype features the ESP32 microcontroller connected to the MPU6050 sensor on a breadboard. Upon powering up, the ESP32 initializes the I2C communication protocol with the sensor and sets up a local Wi-Fi Access Point to broadcast its network.
 <br><br>
 <p align="center">
   <img src="1000885277.jpg" alt="Step 1: Hardware Setup" width="75%">
@@ -52,7 +50,7 @@ Device ko power dene ke baad ESP32 aur MPU6050 Active ho jaate hain aur local ho
 <br>
 
 #### 2️⃣ Step 2: Wireless Hotspot Connection Established
-Android Device ko ESP32 ke Access Point network se connect kiya jata hai, jisse Wi-Fi connection stable ho sake.
+**Description:** The user's Android smartphone connects directly to the dedicated Wi-Fi access point created by the ESP32. The interface allows entering emergency contact details securely, storing them via SharedPreferences, and initializing the persistent TCP Socket connection.
 <br><br>
 <p align="center">
   <img src="1000883249.jpg" alt="Step 2: WiFi Connected" width="45%">
@@ -60,7 +58,7 @@ Android Device ko ESP32 ke Access Point network se connect kiya jata hai, jisse 
 <br>
 
 #### 3️⃣ Step 3: Hardware Sensor / UI SOS Triggered
-Jab device ko sudden jerk lagta hai (fall detection) ya user hardware manual button/screen button ko press karta hai, toh instant emergency state detect hoti hai.
+**Description:** When a sudden impact or fall is detected by the accelerometer threshold logic, or when the manual physical override button is triggered, an instant emergency state flag is generated. The app UI immediately updates to show that an emergency state has been detected.
 <br><br>
 <p align="center">
   <img src="1000883250.jpg" alt="Step 3: SOS Triggered Alert" width="45%">
@@ -68,7 +66,7 @@ Jab device ko sudden jerk lagta hai (fall detection) ya user hardware manual but
 <br>
 
 #### 4️⃣ Step 4: Automated SMS Dispatched to Guardian
-App foreground task block se automatic SMS deliver karti hai pre-saved contact number par, jisme exact live coordinates ka Maps link hota hai.
+**Description:** The application automatically runs a background task using SmsManager to dispatch an instantaneous distress alert. The text message includes the precise longitude and latitude coordinates in a pre-formatted Google Maps hyperlink sent directly to the guardian's smartphone.
 <br><br>
 <p align="center">
   <img src="1000883251.jpg" alt="Step 4: SMS Dispatched" width="45%">
@@ -79,8 +77,8 @@ App foreground task block se automatic SMS deliver karti hai pre-saved contact n
 
 ## 🔮 Future Enhancements
 
-* **Custom PCB Design:** Miniaturizing the current breadboard prototype into a sleek wearable device.
-* **Edge-AI Integration:** Deploying light Machine Learning models directly on the microcontroller to minimize false positives during everyday movements.
+* **Custom PCB Design:** Miniaturizing the current breadboard prototype setup into a sleek, compact wearable device (such as a smart pendant or wristband).
+* **Edge-AI Integration:** Deploying lightweight Machine Learning models directly on the microcontroller to filter out false positives during regular everyday activities.
 
 ## 👩‍💻 Project Credits
 
