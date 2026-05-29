@@ -24,7 +24,7 @@ The source code of this project is divided into standard architectural layers to
 
 ### 1. Hardware Unit (Edge Processing)
 * **Microcontroller:** `ESP32` (Leverages a dual-core architecture to execute non-blocking multitasking tasks).
-* **Sensors:** `MPU6050` (A 6-axis Inertial Measurement Unit containing a integrated 3-axis Accelerometer and 3-axis Gyroscope).
+* **Sensors:** `MPU6050` (A 6-axis Inertial Measurement Unit containing an integrated 3-axis Accelerometer and 3-axis Gyroscope).
 * **Network Mode:** Configured in `Soft-AP (Access Point)` mode, enabling the device to host its own local Wi-Fi network for standalone reliability.
 
 ### 2. Android Application (Mobile Engine)
