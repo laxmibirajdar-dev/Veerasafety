@@ -41,11 +41,13 @@ As soon as a hardware trigger (`SOS_BUTTON` or `SOS_FALL`) is processed:
 
 ## 🔄 Project Workflow & Output Gallery
 
+Here is the step-by-step sequence of the project operations along with the hardware testing outputs:
+
 #### 1️⃣ Step 1: Hardware Circuit Setup
 **Description:** The hardware prototype features the ESP32 microcontroller connected to the MPU6050 sensor on a breadboard. Upon powering up, the ESP32 initializes the I2C communication protocol with the sensor and sets up a local Wi-Fi Access Point to broadcast its network.
 <br><br>
 <p align="center">
-  <img src="1000885277.jpg" alt="Step 1: Hardware Setup" width="75%">
+  <img src="Hardware setup.jpeg" alt="Step 1: Hardware Setup" width="75%">
 </p>
 <br>
 
@@ -53,23 +55,31 @@ As soon as a hardware trigger (`SOS_BUTTON` or `SOS_FALL`) is processed:
 **Description:** The user's Android smartphone connects directly to the dedicated Wi-Fi access point created by the ESP32. The interface allows entering emergency contact details securely, storing them via SharedPreferences, and initializing the persistent TCP Socket connection.
 <br><br>
 <p align="center">
-  <img src="1000883249.jpg" alt="Step 2: WiFi Connected" width="45%">
+  <img src="wifi connceted .jpeg" alt="Step 2: WiFi Connected" width="45%">
 </p>
 <br>
 
-#### 3️⃣ Step 3: Hardware Sensor / UI SOS Triggered
+#### 3️⃣ Step 3: Emergency Contact Saved Configuration
+**Description:** The application UI provides a configuration screen where the user can save trusted guardian mobile numbers. These details remain persistent even after the app closes.
+<br><br>
+<p align="center">
+  <img src="Contact saved.jpeg" alt="Step 3: Contact Config" width="45%">
+</p>
+<br>
+
+#### 4️⃣ Step 4: Hardware Sensor / UI SOS Triggered
 **Description:** When a sudden impact or fall is detected by the accelerometer threshold logic, or when the manual physical override button is triggered, an instant emergency state flag is generated. The app UI immediately updates to show that an emergency state has been detected.
 <br><br>
 <p align="center">
-  <img src="1000883250.jpg" alt="Step 3: SOS Triggered Alert" width="45%">
+  <img src="SOS detected.jpeg" alt="Step 4: SOS Triggered Alert" width="45%">
 </p>
 <br>
 
-#### 4️⃣ Step 4: Automated SMS Dispatched to Guardian
+#### 5️⃣ Step 5: Automated SMS Dispatched to Guardian
 **Description:** The application automatically runs a background task using SmsManager to dispatch an instantaneous distress alert. The text message includes the precise longitude and latitude coordinates in a pre-formatted Google Maps hyperlink sent directly to the guardian's smartphone.
 <br><br>
 <p align="center">
-  <img src="1000883251.jpg" alt="Step 4: SMS Dispatched" width="45%">
+  <img src="SMS.jpeg" alt="Step 5: SMS Dispatched" width="45%">
 </p>
 <br>
 
